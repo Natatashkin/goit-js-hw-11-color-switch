@@ -6,6 +6,7 @@ import colors from './colors';
 export const body = document.querySelector('body');
 export const btnStart = document.querySelector('[data-action="start"]');
 export const btnStop = document.querySelector('[data-action="stop"]');
+export const nameColor = document.querySelector('.js-color');
 
 btnStart.addEventListener('click', () => {
     colorPicker.onBtnStart()
@@ -15,10 +16,9 @@ btnStop.addEventListener('click', () => {
 });
 
 class ColorPicker {
-    constructor({colors, onChangeColor}) {
+    constructor() {
         this.intervalId = null;
         this.isActive = false;
-        this.onChangeColor = onChangeColor;
         this.colors = colors;
     }
 
@@ -30,25 +30,35 @@ class ColorPicker {
         this.isActive = true;
         
     this.intervalId = setInterval(() => {
-        this.onChangeColor(colors);
-    //    changeColor(colors);
-    //    console.log('clicks');
+        this.onChangeColor();
+    
     }, 1000);
     }
     
     onBtnStop() {
     clearInterval(this.intervalId);
-    this.isActive = false;
-}
+        this.isActive = false;
+    }
+
+    randomIntegerFromInterval(min, max) {
+        const index = this.colors[Math.floor(Math.random() * (max - min + 1) + min)];
+        if (index === this.index) {
+            this.randomIntegerFromInterval(min, max);
+        } else {
+            this.index = index;
+        }
+    }
+    
+    onChangeColor() {
+        this.randomIntegerFromInterval(0, this.colors.length - 1);
+        body.style.backgroundColor = this.index;
+        nameColor.style.backgroundColor = this.index;
+        nameColor.textContent = this.index;
+}   
 }
 
-const colorPicker = new ColorPicker({onChangeColor: changeColor});
+const colorPicker = new ColorPicker();
 
-const randomIntegerFromInterval = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
 
-function changeColor(colorsArray) {
-    const index = randomIntegerFromInterval(0, 5);
-    return body.style.backgroundColor = colorsArray[index];
-}
+
+
