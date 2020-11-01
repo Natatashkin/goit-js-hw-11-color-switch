@@ -1,31 +1,48 @@
-// import './styles.css';
+import './styles.css';
 import colors from './colors';
 
-const body = document.querySelector('body');
-const btnStart = document.querySelector('[data-action="start"]');
-const btnStop = document.querySelector('[data-action="stop"]');
-let intervalId = null;
-let isActive = false;
+// let intervalId = null;
+// let isActive = false;
+export const body = document.querySelector('body');
+export const btnStart = document.querySelector('[data-action="start"]');
+export const btnStop = document.querySelector('[data-action="stop"]');
 
-btnStart.addEventListener('click', onBtnStart);
-btnStop.addEventListener('click', onBtnStop);
+btnStart.addEventListener('click', () => {
+    colorPicker.onBtnStart()
+});
+btnStop.addEventListener('click', () => {
+    colorPicker.onBtnStop()
+});
 
-function onBtnStart() {
-    if (isActive) {
+class ColorPicker {
+    constructor({colors, onChangeColor}) {
+        this.intervalId = null;
+        this.isActive = false;
+        this.onChangeColor = onChangeColor;
+        this.colors = colors;
+    }
+
+    onBtnStart() {
+    if (this.isActive) {
         return;
     }
-    isActive = true;
-   intervalId = setInterval(() => {
-       changeColor(colors);
-       console.log('clicks');
-   }, 1000);
+
+        this.isActive = true;
+        
+    this.intervalId = setInterval(() => {
+        this.onChangeColor(colors);
+    //    changeColor(colors);
+    //    console.log('clicks');
+    }, 1000);
+    }
     
+    onBtnStop() {
+    clearInterval(this.intervalId);
+    this.isActive = false;
+}
 }
 
-function onBtnStop() {
-    clearInterval(intervalId);
-    isActive = false;
-}
+const colorPicker = new ColorPicker({onChangeColor: changeColor});
 
 const randomIntegerFromInterval = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
