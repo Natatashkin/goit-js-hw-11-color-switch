@@ -30,6 +30,9 @@ body {
   background-color: #fff;
 }
 
+@media screen and (max-width: 585px) {
+}
+
 .button-wrapper {
   display: flex;
 }
@@ -43,6 +46,17 @@ button {
   padding: 10px 60px;
 }
 
+@media screen and (max-width: 585px) {
+  button {
+    background-color: rgb(42, 44, 48);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 25px;
+    padding: 10px 30px;
+  }
+}
+
 button:last-child {
   margin-left: 10px;
 }
@@ -53,6 +67,9 @@ button:focus {
 }
 
 .current-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 
   height: 40px;
@@ -62,4 +79,10 @@ button:focus {
   font-size: 25px;
   font-weight: 700;
   text-align: center;
+}
+
+@media screen and (max-whidth: 585px) {
+  .current-color {
+    margin-bottom: 10px;
+  }
 }
